@@ -69,21 +69,18 @@ public class Player {
             if (counters[i] >= 2) {
                 if (!areThereGroups){
                     areThereGroups = true;
-                    msg = "The following groups were found:\n";
+                    msg = "The following groups were found:";
                 }
-                msg += Group.values()[counters[i]] + " of " + NameCard.values()[i] + "\n";                                                                                          
+                msg += "\n" + Group.values()[counters[i]] + " of " + NameCard.values()[i];                                                                                          
             }
         }
         for (int i = 0; i < cards.length; i++) {
             if (countersSequence[i] > 0) {
                 if (isSequenceStarter[i]){
-                    msg += "RUN of " + cards[i].getSuit() + " with "+ cards[i].getNameCard();
+                    msg += "\nRUN of " + cards[i].getSuit() + " with "+ cards[i].getNameCard();
                     continue;
                 }
-                msg += ", "+ cards[i].getNameCard();
-                if (countersSequence[i + 1] == 0){
-                    msg += "\n";
-                }    
+                msg += ", "+ cards[i].getNameCard(); 
             } else if (counters[cards[i].getNameCard().ordinal()] == 1){
                 if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
                     score +=  10;
@@ -92,7 +89,7 @@ public class Player {
                 }
             } 
         }
-        msg += "Your final score is " + score;
+        msg += "\nYour final score is " + score;
         return msg;
     }
 }
