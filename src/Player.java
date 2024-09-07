@@ -66,21 +66,19 @@ public class Player {
 
         boolean areThereGroups = false;
         for (int i = 0; i < counters.length; i++) {
-            
             if (counters[i] >= 2) {
                 if (!areThereGroups){
                     areThereGroups = true;
                     msg = "The following groups were found:\n";
                 }
                 msg += Group.values()[counters[i]] + " of " + NameCard.values()[i] + "\n";                                                                                          
+            } else if ((counters[i] == 1)) {
+                if (i == 0 || i >= 9){
+                    score +=  10;
+                } else {
+                    score += i + 1;
+                }   
             } 
-            // if ((counters[i] == 1)) {
-            //     if (i == 0 || i > 9){
-            //         score +=  10;
-            //     } else {
-            //         score += i + 1;
-            //     }   
-            // } 
         }
         for (int i = 0; i < cards.length; i++) {
             if (countersSequence[i] > 0) {
@@ -91,29 +89,16 @@ public class Player {
                 msg += ", "+ cards[i].getNameCard();
                 if (countersSequence[i+1] == 0){
                     msg += "\n";
+                }    
+            } else {
+                if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
+                    score +=  10;
+                } else {
+                    score += cards[i].getNameCard().ordinal() + 1;
                 }
             } 
         }
-        
-        // for (int i = 0; i < cards.length; i++) {
-        //     if (countersSequence[i] > 1) {
-        //         msg += "RUN of " + cards[i].getSuit() + " with ";
-        //         for (int j = 0; j < countersSequence[i] - 1; j++) {
-        //             msg += cards[i+j].getNameCard() + ", ";
-        //         }
-        //         msg += "and "+ cards[i+countersSequence[i]-1].getNameCard() +"\n";
-        //     } else {
-        //         if ((counters[cards[i].getNameCard().ordinal()] == 1) && (countersSequence[i] == 0)) {
-        //             if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
-        //                 score +=  10;
-        //             } else {
-        //                 score += cards[i].getNameCard().ordinal() + 1;
-        //             } 
-        //         }
-        //     }
-        // }
         msg += "Your final score is " + String.valueOf(score);
-        
         return msg;
     }
 }
