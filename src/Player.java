@@ -36,7 +36,7 @@ public class Player {
 
         int[] counters = new int[NameCard.values().length];
         int[] countersSequence = new int[cards.length];
-        boolean[] isSequenceStarter = new boolean[cards.length];
+        boolean[] isSequenceStarter = new boolean[cards.length]; //es true cuando una secuencia comienza
 
         // organiza en orden de pintas y valor de las cartas, para facilidad de manejo
         Arrays.sort(cards, Comparator.comparing(PlayingCard::getIndex));
@@ -44,9 +44,9 @@ public class Player {
         for (PlayingCard card : cards) {
             counters[card.getNameCard().ordinal()]++;
         }
+
         int p;  
         int k = 0;
-        // for (int i = 0; i < cards.length; i++) {
         while (k < cards.length){
             p = 1; // se resetea al cambiar de carta
             // loop para encontrar cartas secuenciales a la carta en [i]
@@ -54,14 +54,14 @@ public class Player {
                 // checkea por pinta y por valor de carta secuencial
                 if ((cards[k].getSuit() == cards[j].getSuit()) && (cards[k].getNameCard().ordinal()+p == cards[j].getNameCard().ordinal())) {
                     if (p==1){
-                        isSequenceStarter[k] = true;
+                        isSequenceStarter[k] = true;    // en carta k comienza secuencia
                         countersSequence[k]++; 
                     }
-                    countersSequence[j]++; 
+                    countersSequence[j]++; // cada carta dentro de una secuencia tiene contador=1
                     p++; // incrementa al encontrar una carta secuencial, para checkear por el siguiente valor en la secuencia
                 }
             }
-            k += p;
+            k += p; // salta las cartas dentro de la secuencia ya encontrada
         }
 
         boolean areThereGroups = false;
@@ -75,17 +75,21 @@ public class Player {
             }
         }
         for (int i = 0; i < cards.length; i++) {
+            // si el contador de secuencia es mayor a 0, la carta es parte de una secuencia
             if (countersSequence[i] > 0) {
                 if (!areThereGroups){
                     areThereGroups = true;
                     msg = "The following groups were found:";
                 }
+                // mensaje especial para comenzar una secuencia
                 if (isSequenceStarter[i]){
                     msg += "\nRUN of " + cards[i].getSuit() + " with "+ cards[i].getNameCard();
                     continue;
                 }
+                // mensaje especial para carta en medio de una secuencia
                 msg += ", "+ cards[i].getNameCard(); 
-            } else if (counters[cards[i].getNameCard().ordinal()] == 1){
+            } else if (counters[cards[i].getNameCard().ordinal()] == 1){ // verificar que no son cartas en pares/ternas
+                // si son cartas ACE, o TEN, JACK, QUEEN, KING
                 if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
                     score +=  10;
                 } else {
