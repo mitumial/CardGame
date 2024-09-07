@@ -72,13 +72,7 @@ public class Player {
                     msg = "The following groups were found:\n";
                 }
                 msg += Group.values()[counters[i]] + " of " + NameCard.values()[i] + "\n";                                                                                          
-            } else if ((counters[i] == 1)) {
-                if (i == 0 || i >= 9){
-                    score +=  10;
-                } else {
-                    score += i + 1;
-                }   
-            } 
+            }
         }
         for (int i = 0; i < cards.length; i++) {
             if (countersSequence[i] > 0) {
@@ -87,10 +81,10 @@ public class Player {
                     continue;
                 }
                 msg += ", "+ cards[i].getNameCard();
-                if (countersSequence[i+1] == 0){
+                if (countersSequence[i + 1] == 0){
                     msg += "\n";
                 }    
-            } else {
+            } else if (counters[cards[i].getNameCard().ordinal()] == 1){
                 if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
                     score +=  10;
                 } else {
@@ -98,7 +92,7 @@ public class Player {
                 }
             } 
         }
-        msg += "Your final score is " + String.valueOf(score);
+        msg += "Your final score is " + score;
         return msg;
     }
 }
