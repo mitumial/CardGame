@@ -36,6 +36,7 @@ public class Player {
 
         int[] counters = new int[NameCard.values().length];
         int[] countersSequence = new int[cards.length];
+        boolean[] isSequenceStarter = new boolean[cards.length];
 
         // organiza en orden de pintas y valor de las cartas, para facilidad de manejo
         Arrays.sort(cards, Comparator.comparing(PlayingCard::getIndex));
@@ -53,9 +54,9 @@ public class Player {
                 // checkea por pinta y por valor de carta secuencial
                 if ((cards[k].getSuit() == cards[j].getSuit()) && (cards[k].getNameCard().ordinal()+p == cards[j].getNameCard().ordinal())) {
                     if (p==1){
-                        countersSequence[k]++;
+                        isSequenceStarter[k] = true;
+                        countersSequence[k]++; 
                     }
-                    countersSequence[k]++; // el tamaño de la secuencia encontrada para la carta en [i]
                     countersSequence[j]++; 
                     p++; // incrementa al encontrar una carta secuencial, para checkear por el siguiente valor en la secuencia
                 }
