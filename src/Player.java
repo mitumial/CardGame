@@ -83,22 +83,35 @@ public class Player {
             // } 
         }
         for (int i = 0; i < cards.length; i++) {
-            if (countersSequence[i] > 1) {
-                msg += "RUN of " + cards[i].getSuit() + " with ";
-                for (int j = 0; j < countersSequence[i] - 1; j++) {
-                    msg += cards[i+j].getNameCard() + ", ";
+            if (countersSequence[i] > 0) {
+                if (isSequenceStarter[i]){
+                    msg += "RUN of " + cards[i].getSuit() + " with "+ cards[i].getNameCard();
+                    continue;
                 }
-                msg += "and "+ cards[i+countersSequence[i]-1].getNameCard() +"\n";
-            } else {
-                if ((counters[cards[i].getNameCard().ordinal()] == 1) && (countersSequence[i] == 0)) {
-                    if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
-                        score +=  10;
-                    } else {
-                        score += cards[i].getNameCard().ordinal() + 1;
-                    } 
+                msg += ", "+ cards[i].getNameCard();
+                if (countersSequence[i+1] == 0){
+                    msg += "\n";
                 }
-            }
+            } 
         }
+        
+        // for (int i = 0; i < cards.length; i++) {
+        //     if (countersSequence[i] > 1) {
+        //         msg += "RUN of " + cards[i].getSuit() + " with ";
+        //         for (int j = 0; j < countersSequence[i] - 1; j++) {
+        //             msg += cards[i+j].getNameCard() + ", ";
+        //         }
+        //         msg += "and "+ cards[i+countersSequence[i]-1].getNameCard() +"\n";
+        //     } else {
+        //         if ((counters[cards[i].getNameCard().ordinal()] == 1) && (countersSequence[i] == 0)) {
+        //             if ((cards[i].getNameCard().ordinal() == 0) || (cards[i].getNameCard().ordinal() >= 9)){
+        //                 score +=  10;
+        //             } else {
+        //                 score += cards[i].getNameCard().ordinal() + 1;
+        //             } 
+        //         }
+        //     }
+        // }
         msg += "Your final score is " + String.valueOf(score);
         
         return msg;
