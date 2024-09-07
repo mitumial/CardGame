@@ -76,6 +76,10 @@ public class Player {
         }
         for (int i = 0; i < cards.length; i++) {
             if (countersSequence[i] > 0) {
+                if (!areThereGroups){
+                    areThereGroups = true;
+                    msg = "The following groups were found:";
+                }
                 if (isSequenceStarter[i]){
                     msg += "\nRUN of " + cards[i].getSuit() + " with "+ cards[i].getNameCard();
                     continue;
